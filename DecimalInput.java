@@ -1,8 +1,6 @@
 package numbers;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -61,33 +59,44 @@ class DecimalInput {
 
 	private boolean hasValidChars() { return number.chars().allMatch(VALID_CHAR_SET::contains); }
 
+	private boolean isValidChunks(List<String> chunks){
+		for(int i = 0 ; i < chunks.size() ; i++){
+			if(chunks.get(i) == null || chunks.get(i).length() == 0)
+				return false;
+		}
+		return true;
+	}
+
 	/* A number is considered to have a valid decimal point if none exist, or only one
 	 * exists that splits the string into two further numbers.
 	 */
 	private boolean hasValidDecimalPoint() {
-		String[] numbers = getAllChunks();
-		return numbers.length <= 2 
-				&& !numbers[0].isEmpty()
-				&& !numbers[1].isEmpty();
+
+		List<String> numbers = Arrays.asList(getAllChunks());
+		if(numbers.size() > 2)
+			return false;
+		return numbers.size() > 0 && isValidChunks(numbers);
 	}
 
 	/* A number is considered to have valid padding if they only appear 
 	 * in the place of a comma in the leading number.
 	 */
 	private boolean hasValidPadding() {
-		String[] numbers = getAllChunks();
-		return (numbers.length == 2 ? isNotWithinString(PADDING,numbers[1]) : false) 
-				&& hasValidLeadingPadding(numbers[0]);
+		List<String> numbers = Arrays.asList(getAllChunks());
+		return (numbers.size() == 2 ? isNotWithinString(PADDING,numbers.get(1)) : false)
+				&& hasValidLeadingPadding(numbers.get(0));
 	}
 	
 	private String[] getAllChunks() { return number.split(getRegexOf(DECIMAL)); }
 	
 	private static boolean hasValidLeadingPadding(String leading) {
+		if(leading.length() == 0)
+			return true;
 		return hasNoEdgePadding(leading) && hasValidMiddlePadding(leading);
 	}
 	
 	private static boolean hasNoEdgePadding(String leading) {
-		return leading.charAt(0) != PADDING && leading.charAt(leading.length()-1) != PADDING;
+		return leading != null && leading.charAt(0) != PADDING && leading.charAt(leading.length()-1) != PADDING;
 	}
 	
 	private static boolean hasValidMiddlePadding(String leading) {
@@ -117,9 +126,14 @@ class DecimalInput {
 		return !number.isEmpty() && number.charAt(0) != '-';
 	}
 	
-	private static boolean isNotWithinString (char c, String str) { return str.indexOf(c) < 0; }
+	private static boolean isNotWithinString (char c, String str) { return str != null && str.indexOf(c) < 0; }
 	
-	private static String getRegexOf(char ch) { return ""+ch; }
+	private static String getRegexOf(char ch) {
+		if(ch == DECIMAL){
+			return "\\.";
+		}
+		return ""+ch;
+	}
 	
 	class TestHook {
 		boolean hasValidLeadingPadding(String leading) {
