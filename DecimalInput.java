@@ -17,6 +17,7 @@ class DecimalInput {
 	private static final Set<Integer> VALID_CHAR_SET; // int set to match chars IntStreams
 	static { // Setup set of valid signs
 		Set<Character> signs = new HashSet<>();
+		signs.add('+');
 		signs.add('-');
 		SIGN_SET = Collections.unmodifiableSet(signs);
 	}
@@ -113,7 +114,7 @@ class DecimalInput {
 	}
 	
 	private static boolean isNumberPositive(String number) {
-		return !number.isEmpty() && number.charAt(0) == '+';
+		return !number.isEmpty() && number.charAt(0) != '-';
 	}
 	
 	private static boolean isNotWithinString (char c, String str) { return str.indexOf(c) < 0; }
