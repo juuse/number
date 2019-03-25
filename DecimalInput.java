@@ -121,18 +121,6 @@ class DecimalInput {
 	private static String getRegexOf(char ch) { return ""+ch; }
 	
 	class TestHook {
-		boolean hasValidChars() {
-			return hasValidChars();
-		}
-		boolean hasValidDecimalPoint() {
-			return hasValidDecimalPoint();
-		}
-		boolean hasValidPadding() {
-			return hasValidPadding();
-		}
-		String[] getAllChunks() {
-			return getAllChunks();
-		}
 		boolean hasValidLeadingPadding(String leading) {
 			return DecimalInput.hasValidLeadingPadding(leading);
 		}
