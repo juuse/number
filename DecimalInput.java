@@ -53,7 +53,7 @@ class DecimalInput {
 
 	public String toString() { return (isPositive ? "+" : "-")+removePadding(number); }
 	
-	boolean isInteger() { return isNotWithinString(DECIMAL,number); }
+	boolean isInteger() { return hasValidChars() && isNotWithinString(DECIMAL,number) && hasValidPadding(); }
 	
 	boolean isValid() { return hasValidChars() && hasValidDecimalPoint() && hasValidPadding(); }
 
