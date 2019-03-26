@@ -62,7 +62,7 @@ public class InputTest {
 	}
 
 	@Test
-	public void test_isValid_no_decimal(){ assertFalse(new DecimalInput("1").isValid());}
+	public void test_isValid_no_decimal(){ assertTrue(new DecimalInput("1").isValid());}
 
 	/**isValid Tests**/
 	@Test

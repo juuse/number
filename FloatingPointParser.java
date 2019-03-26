@@ -10,15 +10,15 @@ public class FloatingPointParser {
 	
 	private static final FloatingPointParser INVALID_PARSER = new FloatingPointParser("");
 	
-	private static final DecimalInput DEFAULT_EXPONENT = new DecimalInput("1");
+	private static final DecimalInput DEFAULT_EXPONENT = new DecimalInput("0");
 	private static final char EXPONENTIAL = 'e';
 
 	private final DecimalInput base;
 	private final Optional<DecimalInput> expo;
 	
 	private FloatingPointParser(String number) {
-		if (number.contains(""+EXPONENTIAL)) {
-			String[] numbers = number.split(""+EXPONENTIAL, 2);
+		if (number.toLowerCase().contains(""+EXPONENTIAL)) {
+			String[] numbers = number.toLowerCase().split(""+EXPONENTIAL, 2);
 			base = new DecimalInput(numbers[0]);
 			expo = Optional.of(new DecimalInput(numbers[1]));
 		} else {
