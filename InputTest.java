@@ -81,4 +81,19 @@ public class InputTest {
 
 	}
 
+	@Test
+	public void test_legal_decimal_illegal_padding(){
+
+	}
+
+	@Test
+	public void test_illegal_decimal_illegal_padding(){
+
+	}
+
+	@Test
+	public void test_legal_decimal_legal_padding(){
+		assertTrue(new DecimalInput("1_234.0").isValid());
+	}
+
 }
