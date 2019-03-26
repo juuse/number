@@ -64,4 +64,8 @@ public final class FloatingPointDriver {
 			return parser;
 		}
 	}
+
+	class TestHook {
+
+	}
 }

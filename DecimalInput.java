@@ -59,12 +59,10 @@ class DecimalInput {
 
 	private boolean hasValidChars() { return number.chars().allMatch(VALID_CHAR_SET::contains); }
 
-	private boolean isValidChunks(List<String> chunks){
-		for(int i = 0 ; i < chunks.size() ; i++){
-			if(chunks.get(i) == null || chunks.get(i).length() == 0)
-				return false;
-		}
-		return true;
+	private boolean twoValidChunks(List<String> chunks){
+		if(chunks.size() != 2)
+			return false;
+		return !chunks.get(0).equals("") && !chunks.get(1).equals("");
 	}
 
 	/* A number is considered to have a valid decimal point if none exist, or only one
@@ -73,9 +71,11 @@ class DecimalInput {
 	private boolean hasValidDecimalPoint() {
 
 		List<String> numbers = Arrays.asList(getAllChunks());
-		if(numbers.size() > 2)
-			return false;
-		return numbers.size() > 0 && isValidChunks(numbers);
+
+		if(number.contains(".")){
+			return twoValidChunks(numbers);
+		}
+		return true;
 	}
 
 	/* A number is considered to have valid padding if they only appear 
