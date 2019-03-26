@@ -53,9 +53,9 @@ class DecimalInput {
 
 	public String toString() { return (isPositive ? "+" : "-")+removePadding(number); }
 	
-	boolean isInteger() { return hasValidChars() && isNotWithinString(DECIMAL,number) && hasValidPadding(); }
+	boolean isInteger() { return !number.isEmpty() && isNotWithinString(DECIMAL,number); }
 	
-	boolean isValid() { return hasValidChars() && hasValidDecimalPoint() && hasValidPadding(); }
+	boolean isValid() { return hasValidChars() && hasValidPadding() && (hasValidDecimalPoint() || isInteger()); }
 
 	private boolean hasValidChars() { return number.chars().allMatch(VALID_CHAR_SET::contains); }
 
@@ -83,8 +83,8 @@ class DecimalInput {
 	 */
 	private boolean hasValidPadding() {
 		List<String> numbers = Arrays.asList(getAllChunks());
-		return (numbers.size() == 2 ? isNotWithinString(PADDING,numbers.get(1)) : false)
-				&& hasValidLeadingPadding(numbers.get(0));
+		return (numbers.size() == 2 ? isNotWithinString(PADDING,numbers.get(1)) : true) 
+			&& hasValidLeadingPadding(numbers.get(0));
 	}
 	
 	private String[] getAllChunks() { return number.split(getRegexOf(DECIMAL)); }

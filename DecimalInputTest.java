@@ -38,7 +38,8 @@ public class DecimalInputTest {
 
 	@Test
 	public void testIsValid() {
-		fail("Not yet implemented");
+		DecimalInput t1 = new DecimalInput("1234_560");
+		assertTrue(t1.isValid());
 	}
 	
 	/* *

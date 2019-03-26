@@ -17,8 +17,8 @@ public class FloatingPointParser {
 	private final Optional<DecimalInput> expo;
 	
 	private FloatingPointParser(String number) {
-		if (number.contains(""+EXPONENTIAL)) {
-			String[] numbers = number.split(""+EXPONENTIAL, 2);
+		if (number.toLowerCase().contains(""+EXPONENTIAL)) {
+			String[] numbers = number.toLowerCase().split(""+EXPONENTIAL, 2);
 			base = new DecimalInput(numbers[0]);
 			expo = Optional.of(new DecimalInput(numbers[1]));
 		} else {
