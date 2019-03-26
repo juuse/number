@@ -15,20 +15,38 @@ public class FloatingPointParserTest {
 	@After
 	public void tearDown() throws Exception {
 	}
-
+	
+	/* *
+	 * Returns the number as a double
+	 * */
 	@Test
 	public void testParseDouble() {
-		FloatingPointParser t1 = FloatingPointParser.build("");
-		FloatingPointParser t2 = FloatingPointParser.build("198.23");
-		FloatingPointParser t3 = FloatingPointParser.build("-01.23456E+003");
-		FloatingPointParser t4 = FloatingPointParser.build("1234_560e-3");
-		FloatingPointParser t5 = FloatingPointParser.build("12.3456e2");
-		FloatingPointParser t6 = FloatingPointParser.build("00123456e-2");
+		FloatingPointParser t1 = FloatingPointParser.build("198.23");
+		FloatingPointParser t2 = FloatingPointParser.build("-01.23456E+003");
+		FloatingPointParser t3 = FloatingPointParser.build("1234_560e-3");
+		FloatingPointParser t4 = FloatingPointParser.build("12.3456e2");
+		FloatingPointParser t5 = FloatingPointParser.build("00123456e-2");
 		
-		assertEquals(new Double(-01.23456E+003), t3.parseDouble());
-		fail("Not yet implemented");
+		assertEquals(new Double(198.23), t1.parseDouble());
+		assertEquals(new Double(-01.23456E+003), t2.parseDouble());
+		assertEquals(new Double(1234_560e-3), t3.parseDouble());
+		assertEquals(new Double(12.3456e2), t4.parseDouble());
+		assertEquals(new Double(00123456e-2), t5.parseDouble());
+	
 	}
-
+	
+	@Test (expected = AssertionError.class)
+	public void testParseDoubleEmpty(){
+		FloatingPointParser t1 = FloatingPointParser.build("");
+		assertEquals("Input not valid before parsing", t1.parseDouble());
+	}
+	
+	/* *
+	 * Tests if the input is valid for the parser
+	 * must contain a valid base number
+	 * at least one chunk
+	 * an integer exponent
+	 * */
 	@Test
 	public void testIsValidInput() {
 		FloatingPointParser f1 = FloatingPointParser.build("");
@@ -67,9 +85,13 @@ public class FloatingPointParserTest {
 	 * */
 	@Test
 	public void testBuild() {
-		assertEquals("", FloatingPointParser.build(""));
-		assertEquals("198.23", FloatingPointParser.build("198.23"));
-		assertEquals("-1_182.4", FloatingPointParser.build("-1_182.4"));
+		FloatingPointParser t1 = FloatingPointParser.build("198.23");
+		FloatingPointParser t2 = FloatingPointParser.build("-01.23456E+003");
+		FloatingPointParser t3 = FloatingPointParser.build("1234_560e-3");
+		
+		assertEquals(new Double(198.23), t1.parseDouble());
+		assertEquals(new Double(-01.23456E+003), t2.parseDouble());
+		assertEquals(new Double(1234_560e-3), t3.parseDouble());
 	}
 
 }

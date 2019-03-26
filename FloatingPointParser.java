@@ -10,7 +10,7 @@ public class FloatingPointParser {
 	
 	private static final FloatingPointParser INVALID_PARSER = new FloatingPointParser("");
 	
-	private static final DecimalInput DEFAULT_EXPONENT = new DecimalInput("1");
+	private static final DecimalInput DEFAULT_EXPONENT = new DecimalInput("0");
 	private static final char EXPONENTIAL = 'e';
 
 	private final DecimalInput base;
