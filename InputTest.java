@@ -6,11 +6,24 @@ import org.junit.Test;
 
 import numbers.DecimalInput.TestHook;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /** Some example tests of parser **/
 public class InputTest {
 
 	// For using hook methods that are not object-specific
 	private static final TestHook hook = new DecimalInput("").new TestHook();
+
+	@Test
+	public void test_null_constructor(){
+		assertEquals(new DecimalInput(null), "Number given should not be null.");
+	}
+
+	@Test
+	public void test_white_space_constructor(){
+		assertEquals(new DecimalInput(" 123 "), "Number given should not have leading or trailing whitespace: \" 123 \"");
+	}
 
 	/* *
 	 * Checks whether a number is positive
@@ -83,6 +96,19 @@ public class InputTest {
 		assertEquals("+12", new DecimalInput("12").toString());
 	}
 
+	@Test
+	public void testHasValidChars(){
+		assertFalse(new DecimalInput("1a23.4").isValid());
+		assertTrue(new DecimalInput("123.5").isValid());
+	}
+	
+	@Test
+	public void isInteger(){
+		assertFalse(new DecimalInput("").isInteger());
+		assertTrue(new DecimalInput("123").isInteger());
+		assertFalse(new DecimalInput("123.4").isInteger());
+	}
+	
 	/**getRegexOf tests**/
 	@Test
 	public void testGetRegexOf() {
@@ -99,22 +125,30 @@ public class InputTest {
 
 	@Test
 	public void test_leading_padding_has_edge_has_middle(){
-
+		assertFalse(hook.hasValidLeadingPadding("_1_23_"));
 	}
 
 	@Test
 	public void test_leading_padding_has_edge_no_middle(){
+		assertFalse(hook.hasValidLeadingPadding("_123"));
 	}
 
 	@Test
 	public void test_leading_padding_no_edge_has_middle(){
+		assertTrue(hook.hasValidLeadingPadding("1_234"));
 	}
 
 	@Test
 	public void test_leading_padding_no_edge_no_middle(){
+		assertTrue(hook.hasValidLeadingPadding("1234"));
 	}
 	
 	/**hasNoEdgePadding tests **/
+	@Test
+	public void test_null_edge_padding(){
+		assertFalse(hook.hasNoEdgePadding(null));
+	}
+
 	@Test
 	public void test_has_padding_front(){
 		assertFalse(hook.hasNoEdgePadding("_123.2"));
@@ -175,18 +209,18 @@ public class InputTest {
 	}
 
 	@Test
-	public void testHasAllValidChars() {
-
+	public void test_valid_padding_len_two_legal_decimal(){
+		assertTrue(new DecimalInput("1_2").isValid());
+		assertFalse(new DecimalInput("1.23_4").isValid());
 	}
-
 	@Test
 	public void test_legal_decimal_illegal_padding(){
-
+		assertFalse(new DecimalInput("_1.23").isValid());
 	}
 
 	@Test
 	public void test_illegal_decimal_illegal_padding(){
-
+		assertFalse(new DecimalInput("_1.1.23").isValid());
 	}
 
 	@Test
@@ -194,4 +228,40 @@ public class InputTest {
 		assertTrue(new DecimalInput("1_234.0").isValid());
 	}
 
+	@Test
+	public void test_valid_char_valid_padding_integer(){
+		assertTrue(new DecimalInput("1_234").isValid());
+	}
+
+	@Test
+	public void test_valid_char_invalid_padding_integer(){
+		assertFalse(new DecimalInput("1234_").isValid());
+	}
+
+	@Test
+	public void test_two_valid_chunks(){
+		List<String> test = new ArrayList<String>();
+		test.add("");
+		test.add("");
+		assertFalse(hook.twoValidChunks(test));
+		test.remove(0);
+		test.add("1");
+		assertFalse(hook.twoValidChunks(test));
+	}
+
+	/**hasValidDecimalPoint tests**/
+	@Test
+	public void test_multiple_decimal_points(){
+		assertFalse(new DecimalInput("12.3.4").isValid());
+	}
+
+	@Test
+	public void test_no_decimal_points(){
+		assertTrue(new DecimalInput("123").isValid());
+	}
+
+	@Test
+	public void test_valid_decimal_points(){
+		assertTrue(new DecimalInput("12.34").isValid());
+	}
 }

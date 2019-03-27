@@ -66,7 +66,7 @@ public final class FloatingPointDriver {
 		return FloatingPointParser.build("bad input");
 	}
 
-	class TestHook {
+	public class TestHook {
 		
 		public String toUpperCase(String line){
 			return FloatingPointDriver.toUpperCase(line);

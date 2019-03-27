@@ -59,7 +59,7 @@ class DecimalInput {
 
 	private boolean hasValidChars() { return number.chars().allMatch(VALID_CHAR_SET::contains); }
 	
-	private boolean twoValidChunks(List<String> chunks){
+	private static boolean twoValidChunks(List<String> chunks){
 		if(chunks.size() != 2)
 			return false;
 		return !chunks.get(0).equals("") && !chunks.get(1).equals("");
@@ -91,7 +91,7 @@ class DecimalInput {
 	private static boolean hasValidLeadingPadding(String leading) {
 		if(leading.length() == 0)
 			return true;
-		return hasNoEdgePadding(leading) && hasValidMiddlePadding(leading);
+		return (hasNoEdgePadding(leading)) && hasValidMiddlePadding(leading);
 	}
 	
 	private static boolean hasNoEdgePadding(String leading) {
@@ -135,6 +135,7 @@ class DecimalInput {
 	}
 	
 	class TestHook {
+		boolean twoValidChunks(List<String> input) { return DecimalInput.twoValidChunks(input);}
 		boolean hasValidLeadingPadding(String leading) {
 			return DecimalInput.hasValidLeadingPadding(leading);
 		}
