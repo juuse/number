@@ -71,6 +71,7 @@ public class InputTest {
 
 		assertFalse(hook.isNotWithinString('9', "a9xc1d"));
 		assertFalse(hook.isNotWithinString('n', "Write your name"));
+		assertFalse(hook.isNotWithinString('d', null));
 	}
 
 	/**toString tests**/
@@ -91,7 +92,28 @@ public class InputTest {
 	}
 
 	/**hasValidLeadingPadding tests **/
+	@Test
+	public void test_leading_padding_empty_string(){
+		assertTrue(hook.hasValidLeadingPadding(""));
+	}
 
+	@Test
+	public void test_leading_padding_has_edge_has_middle(){
+
+	}
+
+	@Test
+	public void test_leading_padding_has_edge_no_middle(){
+	}
+
+	@Test
+	public void test_leading_padding_no_edge_has_middle(){
+	}
+
+	@Test
+	public void test_leading_padding_no_edge_no_middle(){
+	}
+	
 	/**hasNoEdgePadding tests **/
 	@Test
 	public void test_has_padding_front(){

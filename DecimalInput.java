@@ -69,13 +69,10 @@ class DecimalInput {
 	 * exists that splits the string into two further numbers.
 	 */
 	private boolean hasValidDecimalPoint() {
-
-		List<String> numbers = Arrays.asList(getAllChunks());
-
-		if(number.contains(".")){
-			return twoValidChunks(numbers);
-		}
-		return true;
+        List<String> numbers = Arrays.asList(getAllChunks());
+        if(numbers.size() > 2)
+            return false;
+        return numbers.size() > 0 && twoValidChunks(numbers);
 	}
 
 	/* A number is considered to have valid padding if they only appear 
