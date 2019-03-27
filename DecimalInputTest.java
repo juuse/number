@@ -48,7 +48,7 @@ public class DecimalInputTest {
 	 * */
 	@Test
 	public void testGetRegexOf() {
-		assertEquals(".", hook.getRegexOf('.'));
+		assertEquals("\\.", hook.getRegexOf('.'));
 		assertEquals("a", hook.getRegexOf('a'));
 		assertEquals("9", hook.getRegexOf('9'));
 	}

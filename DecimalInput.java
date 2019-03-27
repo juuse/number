@@ -58,7 +58,7 @@ class DecimalInput {
 	boolean isValid() { return hasValidChars() && hasValidPadding() && (hasValidDecimalPoint() || isInteger()); }
 
 	private boolean hasValidChars() { return number.chars().allMatch(VALID_CHAR_SET::contains); }
-
+	
 	private boolean twoValidChunks(List<String> chunks){
 		if(chunks.size() != 2)
 			return false;
@@ -70,8 +70,10 @@ class DecimalInput {
 	 */
 	private boolean hasValidDecimalPoint() {
         List<String> numbers = Arrays.asList(getAllChunks());
+		
         if(numbers.size() > 2)
             return false;
+		
         return numbers.size() > 0 && twoValidChunks(numbers);
 	}
 
