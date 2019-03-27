@@ -33,7 +33,7 @@ public final class FloatingPointDriver {
 			if(!Character.isUpperCase(line.charAt(i)))
 				builder.append(Character.toUpperCase(line.charAt(i)));
 			else
-				builder.appned(line.charAt(i));
+				builder.append(line.charAt(i));
 		}
 		
 		return builder.toString();
