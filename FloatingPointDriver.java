@@ -26,43 +26,45 @@ public final class FloatingPointDriver {
 		return parser.isValidInput() ? Optional.of(parser.parseDouble()) : Optional.empty();
 	}
 
+	//helper method that converts line to uppercase
+	private String toUpperCase(String line){
+		StringBuilder builder = new StringBuilder();
+		for(int i = 0; i < line.length(); i++){
+			if(!Character.isUpperCase(line.charAt(i)))
+				builder.append(Character.toUpperCase(line.charAt(i)));
+			else
+				builder.appned(line.charAt(i));
+		}
+		
+		return builder.toString();
+	}
+	
+	private String removeWhiteSpace(String line){
+		StringBuilder builder = new StringBuilder();
+
+		for(int i = 0; i < line.length(); i++){
+			if(!Character.isWhitespace(line.charAt(i)))
+				builder.append(line.charAt(i));
+		}
+		return builder.toString();
+	}
+	
 	// Reads from the input reader and builds a parser
 	private final FloatingPointParser getFloatingPointParser(BufferedReader input) {
-		FloatingPointParser parser = null;
-		if (input != null) {
-			String line = null;
-			try {
-				line = input.readLine();
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-			if (line == null)
-				throw new NullPointerException("No input recieved.");
-			else {
-				StringBuilder builder = new StringBuilder();
-				for (int i = 0; i < line.length(); i++)
-					if (!Character.isWhitespace(line.charAt(i)))
-						builder.append(line.charAt(i));
-				line = builder.toString();
-				if (line.length() != 0) {
-					builder = new StringBuilder();
-					for (int i = 0; i < line.length(); i++) {
-						if (!Character.isUpperCase(line.charAt(i)))
-							builder.append(Character.toUpperCase(line.charAt(i)));
-						else
-							builder.append(line.charAt(i));
-					}
-					parser = FloatingPointParser.build(line);
-				} else {
-					parser = FloatingPointParser.build("bad input");
-				}
-			}
-		}
-		if (parser == null) {
-			return FloatingPointParser.build("input that is really bad");
+
+		if(input == null)
+			throw new NullPointerException("No input received.");
+		
+		String line = removeWhiteSpace(input.readLine());
+		
+		if (line.length() != 0) {
+			//convert to uppercase
+			return FloatingPointParser.build(toUpperCase(line));
 		} else {
-			return parser;
+			//input is all whitespace
+			return FloatingPointParser.build("bad input");
 		}
+			
 	}
 
 	class TestHook {
